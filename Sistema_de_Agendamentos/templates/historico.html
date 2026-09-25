@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico - {{ paciente.nome }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">Academia da Saúde</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Agenda</a>
+                <a class="nav-link active" href="/pacientes">Pacientes</a>
+                <a class="nav-link" href="/agendar">Novo Agendamento</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <div>
+                        <h2 class="h4 mb-0">{{ paciente.nome }}</h2>
+                        <small class="text-muted">Telefone: {{ paciente.telefone or 'Não informado' }}</small>
+                    </div>
+                    <a href="/pacientes" class="btn btn-outline-secondary btn-sm">Voltar para Pacientes</a>
+                </div>
+                {% if paciente.obs %}
+                <div class="alert alert-light border">
+                    <strong>Observações Gerais do Paciente:</strong> {{ paciente.obs }}
+                </div>
+                {% endif %}
+
+                <h5 class="mt-4 mb-3">Linha do Tempo de Atendimentos</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 15%;">Data</th>
+                                <th style="width: 15%;">Horário</th>
+                                <th style="width: 15%;">Status</th>
+                                <th style="width: 55%;">Relato / Descrição da Sessão</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for at in atendimentos %}
+                            <tr>
+                                <td>{{ at.data }}</td>
+                                <td>{{ at.horario }}</td>
+                                <td>
+                                    {% if at.status == 'Finalizado' %}
+                                        <span class="badge bg-success">Finalizado</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">{{ at.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ at.descricao or 'Nenhuma anotação registrada.' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-3">Este paciente ainda não possui consultas no histórico.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+:root {
+    --verde-saude: #28a745;
+    --verde-escuro: #1e7e34;
+    --cinza-fundo: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--cinza-fundo);
+    color: #333333;
+}
+
+.navbar {
+    background-color: var(--verde-saude) !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.btn-success {
+    background-color: var(--verde-saude);
+    border-color: var(--verde-saude);
+}
+
+.btn-success:hover {
+    background-color: var(--verde-escuro);
+    border-color: var(--verde-escuro);
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+}
+
+.table th {
+    background-color: #e9ecef;
+}
